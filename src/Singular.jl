@@ -118,6 +118,9 @@ function __init__()
    singular_version_nr=Singular.libSingular.version()
    ver = digits(singular_version_nr, base = 10)
    svn = VersionNumber("$(ver[1]).$(ver[2]).$(ver[3])-$(ver[4])")
+   # We need to do this at the end of __init__() so that all globals
+   # are available for wrapping.
+   Sync._wrap_module(Singular)
    if show_banner             
      println("""Singular.jl, based on
                      SINGULAR                                 /  
@@ -180,5 +183,7 @@ include("caller.jl")
 include("Meta.jl")
 
 include("Map.jl")
+
+include("Sync.jl")
 
 end # module
